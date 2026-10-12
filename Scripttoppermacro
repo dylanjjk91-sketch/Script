@@ -1,0 +1,70 @@
+
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
+local gui = Instance.new("ScreenGui")
+gui.Name = "BlackLoadingScreen"
+gui.IgnoreGuiInset = true
+gui.DisplayOrder = 999999
+gui.ResetOnSpawn = false
+gui.Parent = playerGui
+
+-- Fondo negro
+local fondo = Instance.new("Frame")
+fondo.Size = UDim2.new(1, 0, 1, 0)
+fondo.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+fondo.BorderSizePixel = 0
+fondo.Parent = gui
+
+-- Texto de carga
+local texto = Instance.new("TextLabel")
+texto.Size = UDim2.new(1, 0, 0, 50)
+texto.Position = UDim2.new(0, 0, 0.42, 0)
+texto.BackgroundTransparency = 1
+texto.Text = "Cargando..."
+texto.TextColor3 = Color3.fromRGB(255, 255, 255)
+texto.Font = Enum.Font.GothamBold
+texto.TextSize = 28
+texto.Parent = fondo
+
+-- Porcentaje
+local porcentaje = Instance.new("TextLabel")
+porcentaje.Size = UDim2.new(1, 0, 0, 40)
+porcentaje.Position = UDim2.new(0, 0, 0.51, 0)
+porcentaje.BackgroundTransparency = 1
+porcentaje.Text = "0%"
+porcentaje.TextColor3 = Color3.fromRGB(180, 180, 180)
+porcentaje.Font = Enum.Font.Gotham
+porcentaje.TextSize = 22
+porcentaje.Parent = fondo
+
+-- Barra de carga
+local barraFondo = Instance.new("Frame")
+barraFondo.Size = UDim2.new(0.65, 0, 0, 8)
+barraFondo.Position = UDim2.new(0.175, 0, 0.60, 0)
+barraFondo.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+barraFondo.BorderSizePixel = 0
+barraFondo.Parent = fondo
+
+local barra = Instance.new("Frame")
+barra.Size = UDim2.new(0, 0, 1, 0)
+barra.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+barra.BorderSizePixel = 0
+barra.Parent = barraFondo
+
+-- Cargar hasta 73 %
+for i = 1, 73 do
+    porcentaje.Text = i .. "%"
+    barra.Size = UDim2.new(i / 100, 0, 1, 0)
+    task.wait(0.06)
+end
+
+-- Congelar visualmente la carga
+porcentaje.Text = "73%"
+barra.Size = UDim2.new(0.73, 0, 1, 0)
+
+-- Mantener la pantalla visible indefinidamente
+while true do
+    task.wait(1)
+end
